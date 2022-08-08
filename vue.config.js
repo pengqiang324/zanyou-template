@@ -4,6 +4,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
+const port = 9526 // dev port
 module.exports = defineConfig({
   transpileDependencies: true,
   chainWebpack: config => {
@@ -11,5 +12,8 @@ module.exports = defineConfig({
     config.resolve.alias
         .set('@', resolve('src'))
   },
-  lintOnSave:false
+  lintOnSave:false,
+  devServer: {
+    port
+  }
 })
