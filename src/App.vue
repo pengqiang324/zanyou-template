@@ -1,12 +1,12 @@
 <template>
   <div v-if="isRouterAlive">
-    <transition mode="out-in" name="fade">
-      <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
+      <transition mode="out-in" name="fade">
         <keep-alive>
           <component :is="Component" />
         </keep-alive>
-      </router-view>
-    </transition>
+      </transition>
+    </router-view>
   </div>
 </template>
 
