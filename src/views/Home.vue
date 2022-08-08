@@ -107,11 +107,11 @@
                 <el-table-column v-if="!filterLabel('操作')" label="操作" width="120px" fixed="right">
                     <template #default="scope">
                         <Divider :number="1">
-                            <el-button type="primary" link @click="dialogVisible = true" v-if="true">查看
+                            <el-button type="primary" link @click="handlerDetail" v-if="true">查看
                             </el-button>
                             <el-button type="primary" link @confirm="linkDetail(scope.row)" v-if="true">删除
                             </el-button>
-                            <el-button type="primary" link @click="linkDetail(scope.row)" v-if="true">编辑
+                            <el-button type="primary" link @click="dialogVisible = true" v-if="true">编辑
                             </el-button>
                         </Divider>
                     </template>
@@ -145,12 +145,13 @@
 </template>
 
 <script>
-import { ref, getCurrentInstance, defineComponent, onMounted, nextTick } from 'vue'
+import { ref, getCurrentInstance, defineComponent, onMounted } from 'vue'
 import baseMixin from '../mixins'
 import MaskMixin from '../mixins/mask'
 import { hello } from '../store/modules/hello.js'
 import { mapActions, mapState } from 'pinia'
 import { Test } from '@/api/common'
+import { PAGE } from 'application-message-plus' // 按需导入
 
 export default defineComponent({
     name: 'm-home',
@@ -252,18 +253,23 @@ export default defineComponent({
             }
         }
 
+        const handlerDetail = () => {
+            PAGE('/about')
+        }
+
         return {
             loading,
             tableData,
             tableRef,
+            dialogVisible,
             filterLabel,
             checkChange,
             handleConfirm,
             linkDetail,
             handleClick,
-            dialogVisible,
             handleBeforeClose,
-            refresh
+            refresh,
+            handlerDetail
         }
     },
 
