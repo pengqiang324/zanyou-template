@@ -122,37 +122,35 @@
             </el-table>
             <Pagination :total="total" :current="page" :page-size="pageSize">
                 <template #default="data">
-                    <el-pagination :page-sizes="data.sizes" :layout="data.layout" @current-change="handlePageChange"
-                        @size-change="handleSizeChange" v-model:currentPage="page" :page-size="pageSize" :total="total">
+                    <el-pagination :page-sizes="data.sizes" small :layout="data.layout"
+                        @current-change="handlePageChange" @size-change="handleSizeChange" v-model:currentPage="page"
+                        :page-size="pageSize" :total="total">
                     </el-pagination>
                 </template>
             </Pagination>
         </Content>
         <!-- <BaseSetting title="heloe"><span>不错</span></BaseSetting> -->
         <!-- dialog -->
-        <el-dialog
-            v-model="dialogVisible"
-            title="Tips"
-            width="30%"
-        >
+        <el-dialog v-model="dialogVisible" title="Tips" width="30%" :appendToBody="false"
+            :beforeClose="handleBeforeClose">
             <span>{{ title }}</span>
             <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="dialogVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="handleTitle"
-                >Confirm</el-button
-                >
-            </span>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="handleTitle">Confirm</el-button>
+                </span>
             </template>
         </el-dialog>
     </div>
 </template>
 
 <script>
-import { ref, getCurrentInstance, defineComponent } from 'vue'
+import { ref, getCurrentInstance, defineComponent, onMounted, nextTick } from 'vue'
 import baseMixin from '../mixins'
+import MaskMixin from '../mixins/mask'
 import { hello } from '../store/modules/hello.js'
 import { mapActions, mapState } from 'pinia'
+import { Test } from '@/api/common'
 
 export default defineComponent({
     name: 'm-home',
@@ -185,8 +183,7 @@ export default defineComponent({
             },
             total: 100,
             page: 1,
-            pageSize: 10,
-            dialogVisible: false
+            pageSize: 10
         }
     },
 
@@ -198,6 +195,7 @@ export default defineComponent({
         const This = getCurrentInstance().appContext.config.globalProperties
         const loading = ref(true)
         const { tableRef, checkChange, filterLabel } = baseMixin()
+        const { dialogVisible, handleBeforeClose } = MaskMixin()
         const tableData = ref([
             {
                 date: '2016-05-03',
@@ -221,11 +219,6 @@ export default defineComponent({
             // },
         ])
 
-        setTimeout(() => {
-            loading.value = false
-            // tableData.value = []
-        }, 2000);
-
         const handleConfirm = () => {
             console.log('确认了')
         }
@@ -235,7 +228,7 @@ export default defineComponent({
         }
 
         const handleClick = () => {
-             This.$message({
+             This.$zl_message({
                 message: 'Congrats, this is a success message.',
                 type: 'success',
             })
@@ -245,6 +238,20 @@ export default defineComponent({
 
         helloStore.$patch({ title: 'gogo' })
         console.log('store', helloStore)
+
+        onMounted(() => {
+            refresh()
+        })
+
+        const refresh = () => {
+            loading.value = true
+            try {
+                Test()
+            } finally {
+                loading.value = false
+            }
+        }
+
         return {
             loading,
             tableData,
@@ -253,15 +260,19 @@ export default defineComponent({
             checkChange,
             handleConfirm,
             linkDetail,
-            handleClick
+            handleClick,
+            dialogVisible,
+            handleBeforeClose,
+            refresh
         }
+    },
+
+    activated() {
+        console.log('触发了')
     },
 
     methods: {
         ...mapActions(hello, ['setTitle']),
-        refresh() {
-            console.log('刷新')
-        },
         handlePageChange(page) {
             console.log('改变了l', page)
         },
@@ -270,7 +281,6 @@ export default defineComponent({
         },
         handleTitle() {
             this.setTitle('设置成功了')
-            // console.log(this.setTitle)
             this.dialogVisible = false
         }
     }
