@@ -1,4 +1,4 @@
-# my-marketing
+# zanyou-template
 
 ## Project setup
 ```
