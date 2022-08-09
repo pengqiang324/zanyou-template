@@ -2,7 +2,7 @@ import axios from 'axios';
 import config from '../config'
 import { getToken } from '@/utils/message.js'
 import { MESSAGE, LOGONOUT } from 'application-message-plus'
-// const _this = Vue.prototype
+console.log(config, import.meta.env)
 var Axios = axios.create({
   baseURL: config.baseApi,
   timeout: 10000,
@@ -58,7 +58,7 @@ function breakMessage(msg) {
   }
 }
 //退出
-async function logout() {
+function logout() {
   // await store.dispatch('login/logout')
   // router.push(`/login?redirect=${router.history.current.fullPath}`)
   LOGONOUT({ 

@@ -21,3 +21,4 @@ app.use(ElementPlus, { locale: zhCn }) // 中文
 app.use(router)
 app.use(store)
 app.mount('#app')
+

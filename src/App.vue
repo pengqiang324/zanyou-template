@@ -1,9 +1,13 @@
 <template>
   <div v-if="isRouterAlive">
-    <router-view v-slot="{ Component }">
+    <nav style="font-size: 18px;margin:20px 0;text-align:center;">
+      <router-link to="/" :style="{'margin-right': '20px', 'border-bottom': route.fullPath === '/' ? '1px solid red' : ''}">首页</router-link>
+      <router-link to="/about" :style="{'border-bottom': route.fullPath === '/about' ? '1px solid red' : ''}">关于我们</router-link>
+    </nav>
+    <router-view v-slot="{ Component, route }">
       <transition mode="out-in" name="fade">
         <keep-alive>
-          <component :is="Component" />
+          <component :is="Component" :key="route.name"/>
         </keep-alive>
       </transition>
     </router-view>
@@ -16,6 +20,7 @@ import { nextTick } from 'vue'
 import { mapActions } from 'pinia'
 import { userInfo } from '@/store/modules/userInfo'
 import config from './config/defaultSettings'
+import { useRoute } from 'vue-router'
 
 export default {
   provide() {
@@ -29,6 +34,13 @@ export default {
       isRouterAlive: true,
       key: 0,
     };
+  },
+
+  setup() {
+    const route = useRoute()
+    return {
+      route
+    }
   },
 
   beforeMount() {

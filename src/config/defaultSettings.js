@@ -5,7 +5,8 @@
 */
 const SINGLE = 'single'
 const EMBEDDED = 'embedded'
-const WHITE_ORIGIN = process.env.VUE_APP_iframeUrl
+const WHITE_ORIGIN = import.meta.env.VITE_APP_iframeUrl
+
 export default {
     whiteOrigin: WHITE_ORIGIN,
     developerModel: window.self === window.top ? SINGLE : EMBEDDED // 动态设置模式
