@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue';
+import viteCompression from 'vite-plugin-compression'
 import webpackConfig from './src/config/package.js';
 
 export default ({ mode }) => {
@@ -72,6 +73,9 @@ export default ({ mode }) => {
               }
             }
         },
-        plugins: [vue()]
+        plugins: [
+          vue(),
+          viteCompression() // gzip代码压缩
+        ]
       })
 };
