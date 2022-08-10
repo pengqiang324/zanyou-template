@@ -13,5 +13,5 @@
 
 import { ref } from 'vue'
 
-const msg = ref('hello baby')
+const msg = ref('hello baby test')
 </script>
