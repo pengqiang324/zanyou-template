@@ -122,9 +122,8 @@
             </el-table>
             <Pagination :total="total" :current="page" :page-size="pageSize">
                 <template #default="data">
-                    <el-pagination :page-sizes="data.sizes" small :layout="data.layout"
-                        @current-change="handlePageChange" @size-change="handleSizeChange" v-model:currentPage="page"
-                        :page-size="pageSize" :total="total">
+                    <el-pagination :page-sizes="data.sizes" small :layout="data.layout" :current-page="page"
+                        :page-size="pageSize" :total="total" @update:page-size="handleSizeChange" @update:current-page="handlePageChange">
                     </el-pagination>
                 </template>
             </Pagination>
