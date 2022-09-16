@@ -16,7 +16,7 @@
 
 <script>
 import "@/styles/index.scss";
-import { nextTick } from 'vue'
+import { nextTick, ref, onMounted } from 'vue'
 import { mapActions } from 'pinia'
 import { userInfo } from '@/store/modules/userInfo'
 import config from './config/defaultSettings'
@@ -37,7 +37,12 @@ export default {
   },
 
   setup() {
+    const a = ref(0)
     const route = useRoute()
+
+    onMounted(() => {
+      a.value = 1
+    })
     return {
       route
     }

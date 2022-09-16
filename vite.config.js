@@ -2,7 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue';
 import viteCompression from 'vite-plugin-compression'
-import viteImagemin from 'vite-plugin-imagemin'
+// import viteImagemin from 'vite-plugin-imagemin'
 import webpackConfig from './src/config/package.js';
 
 export default ({ mode }) => {
@@ -52,7 +52,8 @@ export default ({ mode }) => {
                   // 最小化拆分包
                 manualChunks: (id) => {
                   if (id.includes('node_modules')) {
-                    return id.toString().split('node_modules/')[1].split('/')[0].toString();
+                    // return id.toString().split('node_modules/')[1].split('/')[0].toString();
+                    return 'verdon'
                   }
                 },
                 assetFileNames: assetInfo => {
@@ -77,33 +78,33 @@ export default ({ mode }) => {
         plugins: [
           vue(),
           viteCompression(), // gzip代码压缩
-          viteImagemin({ // 图片压缩 打包相对耗时
-            gifsicle: {
-              optimizationLevel: 7,
-              interlaced: false
-            },
-            optipng: {
-              optimizationLevel: 7
-            },
-            mozjpeg: {
-              quality: 20
-            },
-            pngquant: {
-              quality: [0.8, 0.9],
-              speed: 4
-            },
-            svgo: {
-              plugins: [
-                {
-                  name: 'removeViewBox'
-                },
-                {
-                  name: 'removeEmptyAttrs',
-                  active: false
-                }
-              ]
-            }
-          })
+          // viteImagemin({ // 图片压缩 打包相对耗时
+          //   gifsicle: {
+          //     optimizationLevel: 7,
+          //     interlaced: false
+          //   },
+          //   optipng: {
+          //     optimizationLevel: 7
+          //   },
+          //   mozjpeg: {
+          //     quality: 20
+          //   },
+          //   pngquant: {
+          //     quality: [0.8, 0.9],
+          //     speed: 4
+          //   },
+          //   svgo: {
+          //     plugins: [
+          //       {
+          //         name: 'removeViewBox'
+          //       },
+          //       {
+          //         name: 'removeEmptyAttrs',
+          //         active: false
+          //       }
+          //     ]
+          //   }
+          // })
         ]
       })
 };

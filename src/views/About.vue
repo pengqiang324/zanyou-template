@@ -17,3 +17,11 @@ import img from '/src/assets/43.png'
 
 const msg = ref('hello baby test')
 </script>
+
+<style lang="scss">
+  .home {
+    img {
+      width: 100%;
+    }
+  }
+</style>
