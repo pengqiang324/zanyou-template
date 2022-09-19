@@ -2,7 +2,7 @@
   <div v-if="isRouterAlive">
     <nav style="font-size: 18px;margin:20px 0;text-align:center;">
       <router-link to="/" :style="{'margin-right': '20px', 'border-bottom': route.fullPath === '/' ? '1px solid red' : ''}">首页</router-link>
-      <router-link to="/about" :style="{'border-bottom': route.fullPath === '/about' ? '1px solid red' : ''}">关于</router-link>
+      <router-link to="/about" :style="{'border-bottom': route.fullPath === '/about' ? '1px solid red' : ''}">关于信息</router-link>
     </nav>
     <router-view v-slot="{ Component, route }">
       <transition mode="out-in" name="fade">
